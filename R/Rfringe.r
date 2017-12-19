@@ -2280,7 +2280,10 @@ tclvar <- function(...) tclVar(...)
 # gets a list of interferograms, identified by having an element "isInterferogram"
 
 listInterferograms <- function(envir=.GlobalEnv, ...) {
-    names(which(sapply(ls(envir=envir, all=TRUE), function(string) !is.null(eval(parse(text=string))$isInterferogram))))
+    names(which(sapply(ls(envir=envir, all=TRUE), function(string) {
+        x = eval(parse(text=string))
+        is.recursive(x) && !is.null(x$isInterferogram)
+    })))
 }
 
 #############
