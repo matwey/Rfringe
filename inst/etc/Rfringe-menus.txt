@@ -1,0 +1,82 @@
+# Rfringe menu definitions
+
+# Stolen from Rcmdr
+
+#   type    menu/item      operation/parent  label                                          command/menu
+
+    menu    fileMenu        topMenu         ""                                              ""
+    item    fileMenu        command         "Load interferogram from image..."              openint
+    menu    openMenu        fileMenu        ""                                              ""
+    item    openMenu        command         "From workspace..."                             changeint
+    item    openMenu        command         "From file..."                                  opensavedint
+    item    fileMenu        cascade         "Open interferogram"                            openMenu
+    item    fileMenu        command         "Save current"                                  saveint
+    item    fileMenu        command         "Clean workspace..."                            clearint
+    menu    fpMenu          fileMenu        ""                                              ""
+    item    fpMenu          command         "Create..."                                     newproject
+    menu    popenMenu       fpMenu          ""                                              ""
+    item    popenMenu       command         "From workspace..."                             changeproject
+    item    popenMenu       command         "From file..."                                  opensavedproject
+    item    fpMenu          cascade         "Open"                                          popenMenu
+    item    fpMenu          command         "Save"                                          saveproject
+    item    fpMenu          command         "Clean workspace..."                            clearproject
+    item    fileMenu        cascade         "Project"                                       fpMenu
+    menu    exitMenu        fileMenu        ""                                              ""
+    item    exitMenu        command         "From Rfringe"                                  closeRfringe
+    item    exitMenu        command         "From Rfringe and R"                            closeRfringeandr
+    item    fileMenu        cascade         "Exit"                                          exitMenu
+    item    topMenu         cascade         "File"                                          fileMenu
+    menu    traceMenu       topMenu         ""                                              ""
+    item    traceMenu       command         "Trace aperture edge"                           circlepars
+    item    traceMenu       command         "Trace obstruction"                             obstructpars
+    item    traceMenu       command         "Autotrace options..."                          autotrace.options
+    item    traceMenu       command         "Autotrace fringes"                             autotrace
+    item    topMenu         cascade         "Trace"                                         traceMenu
+    menu    editMenu        topMenu         ""                                              ""
+    item    editMenu        command         "Basic image info..."                           imageinfo
+    item    editMenu        command         "Analysis info..."                              analysisinfo
+    item    editMenu        command         "Target conic..."                               targetconicinfo
+    item    editMenu        command         "Fringe..."                                     editfringe
+    item    topMenu         cascade         "Edit"                                          editMenu
+    menu    fitMenu         topMenu         ""                                              ""
+    item    fitMenu         command         "Max order..."                                  maxorder
+    item    fitMenu         command         "Go"                                            fitzernikes
+    item    topMenu         cascade         "Fit"                                           fitMenu
+    menu    plotMenu        topMenu         ""                                              ""
+    item    plotMenu        command         "Synthetic interferogram"                       synthint
+    item    plotMenu        command         "Wavefront"                                     plotwf
+    item    plotMenu        command         "Cross section..."                              plotcontour
+    item    plotMenu        command         "3d Wavefront (rgl)"                            wf3d
+    item    plotMenu        command         "3d Wavefront (persp)..."                       wf3d.vanilla
+    item    plotMenu        command         "Residual analysis"                             plotresiduals
+    item    plotMenu        command         "Star test & mtf..."                            plotstartest
+    item    plotMenu        command         "Replot fringe trace"                           plotfringes
+    item    topMenu         cascade         "Plot"                                          plotMenu
+    menu    reportMenu      topMenu         ""                                              ""
+    item    reportMenu      command         "Summary"                                       printsummary
+    item    reportMenu      command         "Details"                                       printdetails
+    item    reportMenu      command         "Printer friendly"                              pdfreport
+    item    topMenu         cascade         "Report"                                        reportMenu
+    menu    projectMenu     topMenu         ""                                              ""
+    item    projectMenu     command         "Add current interferogram"                     addtoproject
+    item    projectMenu     command         "Batch add..."                                  batchadd
+    item    projectMenu     command         "Remove interferograms..."                      removefromproject
+    menu    pplotMenu       projectMenu     ""                                              ""
+    item    pplotMenu       command         "Wavefront"                                     plotwf.project
+    item    pplotMenu       command         "Cross section..."                              plotcontour.project
+    item    pplotMenu       command         "3d Wavefront (rgl)"                            wf3d.project
+    item    pplotMenu       command         "3d Wavefront (persp)..."                       wf3d.vanilla.project
+    item    pplotMenu       command         "Star test & mtf..."                            plotstartest.project
+    item    pplotMenu       command         "Interferogram comparisons"                     plotspm.project
+    item    projectMenu     cascade         "Plot"                                          pplotMenu
+    menu    preportMenu     projectMenu     ""                                              ""
+    item    preportMenu     command         "Contents"                                      printtoc.project
+    item    preportMenu     command         "Summary"                                       printsummary.project
+    item    preportMenu     command         "Details"                                       printdetails.project
+    item    preportMenu     command         "Printer friendly"                              pdfreport.project
+    item    projectMenu     cascade         "Report"                                        preportMenu
+    item    topMenu         cascade         "Project"                                       projectMenu
+    menu    helpMenu        topMenu         ""                                              ""
+    item    helpMenu        command         "Rfringe help"                                  helprfringe
+    item    helpMenu        command         "About Rfringe"                                 aboutrfringe
+    item    topMenu         cascade         "Help"                                          helpMenu

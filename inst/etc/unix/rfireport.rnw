@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\title{Rfringe Test Report}
+
+\begin{document}
+
+\setkeys{Gin}{width=\textwidth}
+
+\maketitle
+
+<<echo=FALSE, strip.white=FALSE>>=
+prompts <- function(...) cat(...)
+.thisint$print.summary()
+@
+
+\begin{center}
+<<label=synthint, fig=TRUE, echo=FALSE, strip.white=FALSE, width=7, height=7>>=
+image(get("int.synth", .thisint$ev),asp=1,col=grey(seq(0,1,length=256)),
+	xaxt="n", yaxt="n", bty="n", main="Synthetic interferogram")
+@
+
+<<label=wf, fig=TRUE, echo=FALSE, strip.white=FALSE, width=7, height=7>>=
+axis.scale <- seq(-1, 1, length=get("pupilsize", .thisint$ev))
+image(axis.scale, axis.scale, get("wf", .thisint$ev), asp=1, col=topo.colors(256),
+	xlab="X", ylab="Y", main="Wavefront map")
+contour(axis.scale,axis.scale, get("wf", .thisint$ev), add=T)
+@
+
+<<label=xsection, fig=TRUE, echo=FALSE, strip.white=FALSE, width=7, height=7>>=
+profiles <- NULL
+rho <- c(seq(1,0, length=101), seq(0,1,length=101))
+x <- c(seq(-1,0,length=101), seq(0,1,length=101))
+thetas <- get("thetas.contour", .thisint$ev)
+plot.surface <- get("plot.surface", .thisint$ev)
+for (i in 1:length(thetas)) {
+	theta <- c(rep(thetas[i]*pi/180+pi,101), rep(thetas[i]*pi/180,101))
+	profiles <- cbind(profiles, fillzm(rho, theta, phi=0,zlist=get("zlist", .thisint$ev)) %*% get("zcoef", .thisint$ev))
+}
+if (plot.surface) {
+	profiles <- profiles*get("wl.eval",.thisint$ev)/2
+	ylabel <- "Surface error (nm)"
+	tlabel <- "Surface cross sections"
+} else {
+	ylabel <- "Wavefront error"
+	tlabel <- "Wavefront cross sections"
+}
+ylimit <- range(profiles)
+plot(x, profiles[,1], type='l', xlim=c(-1,1),ylim=ylimit,xlab="X", ylab=ylabel,
+	main=tlabel)
+grid()
+lypos <- .75 *ylimit[1]+.25*ylimit[2]
+legend(.5, lypos, legend=thetas, lty=1:length(thetas), col=1:length(thetas))
+if (length(thetas)>1) {
+	for (i in 2:length(thetas)) lines(x, profiles[,i], lty=i, col=i)
+}
+@
+
+\end{center}
+
+<<echo=FALSE, strip.white=FALSE>>=
+.thisint$print.details()
+rm(prompts, axis.scale, profiles, rho, x, i, theta, thetas, plot.surface, ylabel, tlabel, ylimit, lypos)
+@
+
+\end{document}

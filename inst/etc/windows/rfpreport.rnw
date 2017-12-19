@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage{Sweave}
+
+\title{Rfringe Project Report}
+
+\begin{document}
+
+\setkeys{Gin}{width=\textwidth}
+
+\maketitle
+
+<<echo=FALSE, strip.white=FALSE>>=
+prompts <- function(...) cat(...)
+.thisproject$print.summary()
+@
+
+\begin{center}
+
+<<label=wf, fig=TRUE, echo=FALSE, strip.white=FALSE, width=7, height=7>>=
+axis.scale <- seq(-1, 1, length=get("pupilsize", .thisproject$ev))
+image(axis.scale, axis.scale, get("wf", .thisproject$ev), asp=1, col=topo.colors(256),
+	xlab="X", ylab="Y", main="Wavefront map")
+contour(axis.scale,axis.scale, get("wf", .thisproject$ev), add=T)
+@
+
+<<label=xsection, fig=TRUE, echo=FALSE, strip.white=FALSE, width=7, height=7>>=
+profiles <- NULL
+rho <- c(seq(1,0, length=101), seq(0,1,length=101))
+x <- c(seq(-1,0,length=101), seq(0,1,length=101))
+thetas <- get("thetas.contour", .thisproject$ev)
+plot.surface <- get("plot.surface", .thisproject$ev)
+for (i in 1:length(thetas)) {
+	theta <- c(rep(thetas[i]*pi/180+pi,101), rep(thetas[i]*pi/180,101))
+	profiles <- cbind(profiles, fillzm(rho, theta, phi=0,zlist=get("zlist", .thisproject$ev)) %*% get("zcoef.mean", .thisproject$ev))
+}
+if (plot.surface) {
+	profiles <- profiles*get("wl.eval",.thisproject$ev)/2
+	ylabel <- "Surface error (nm)"
+	tlabel <- "Surface cross sections"
+} else {
+	ylabel <- "Wavefront error"
+	tlabel <- "Wavefront cross sections"
+}
+ylimit <- range(profiles)
+plot(x, profiles[,1], type='l', xlim=c(-1,1),ylim=ylimit,xlab="X", ylab=ylabel,
+	main=tlabel)
+grid()
+lypos <- .75 *ylimit[1]+.25*ylimit[2]
+legend(.5, lypos, legend=thetas, lty=1:length(thetas), col=1:length(thetas))
+if (length(thetas)>1) {
+	for (i in 2:length(thetas)) lines(x, profiles[,i], lty=i, col=i)
+}
+@
+
+<<label=spm, fig=TRUE, echo=FALSE, strip.white=FALSE, width=7, height=7>>=
+.thisproject$plot.spm()
+@
+
+\end{center}
+
+<<echo=FALSE, strip.white=FALSE>>=
+.thisproject$print.details()
+rm(prompts, axis.scale, profiles, rho, x, i, theta, thetas, plot.surface, ylabel, tlabel, ylimit, lypos)
+@
+
+\end{document}

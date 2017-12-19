@@ -1,0 +1,11 @@
+Package: Rfringe
+Version: 1.0.5
+Date: 2004-10-21
+Title: Rfringe
+Author: M.L. Peck <mpeck1@ix.netcom.com>
+Maintainer: M.L. Peck <mpeck1@ix.netcom.com>
+Depends: R (>= 1.6.0), tcltk
+Suggests: pixmap, rgl
+Description: A package for interferometric fringe analysis
+License: GPL
+Packaged: Thu Oct 21 14:33:19 2004; mike

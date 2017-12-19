@@ -1,0 +1,16 @@
+fillzm                  Create a matrix of Zernike polynomial values
+fraunhofer              Star test simulator
+interferogram           Interferogram object
+makezlist               Make a Zernike polynomial list
+project                 Interfometry project
+pupil                   Create a circular pupil and fill it with a
+                        wavefront
+Rfringe                 Rfringe GUI
+rzernike                Radial Zernike Polynomial
+Summarystats            Wavefront summaries
+synth.interferogram     Synthetic Interferogram
+wf.3dplot               Interactive 3D Wavefront plot
+wf.persp                3D Wavefront plot
+Zernike                 Zernike Polynomials
+zlist.qf                Fringe set of Zernike Polynomials
+zmult                   Zernike coefficient multipliers
