@@ -610,7 +610,7 @@ print.details <- function() {
 
 print.latex <- function() {
 	require(tools)
-	etc <- file.path(.path.package(package="Rfringe")[1], "etc", .Platform$OS.type)
+	etc <- file.path(path.package(package="Rfringe")[1], "etc", .Platform$OS.type)
 	Sweave(file.path(etc, "rfireport.rnw"))
 	system("pdflatex -interaction=batchmode rfireport.tex")
 	if (!is.null(options("pdfviewer")))
@@ -1249,7 +1249,7 @@ print.details <- function() {
 
 print.latex <- function() {
 	require(tools)
-	etc <- file.path(.path.package(package="Rfringe")[1], "etc", .Platform$OS.type)
+	etc <- file.path(path.package(package="Rfringe")[1], "etc", .Platform$OS.type)
 	Sweave(file.path(etc, "rfpreport.rnw"))
 	system("pdflatex -interaction=batchmode rfpreport.tex")
 	if (!is.null(options("pdfviewer")))
@@ -1311,7 +1311,7 @@ Rfringe <- function(){
     topMenu <- tkmenu(.rfringe)
     tkconfigure(.rfringe, menu=topMenu)
     .rfringe.done <<- tclVar("0") # to address problem in Debian Linux [?]
-    etc <- file.path(.path.package(package="Rfringe")[1], "etc")
+    etc <- file.path(path.package(package="Rfringe")[1], "etc")
     Menus <- read.table(file.path(etc, "Rfringe-menus.txt"), as.is=TRUE)
     for (m in 1:nrow(Menus)) {
         if (Menus[m, 1] == "menu") assign(Menus[m, 2], tkmenu(eval(parse(text=Menus[m, 3])), tearoff=FALSE))
